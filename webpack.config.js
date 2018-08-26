@@ -1,4 +1,5 @@
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -7,6 +8,13 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: './index.html',
 });
 const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ generateStatsFile: true });
+
+const definePlugin = new DefinePlugin({
+  'process.env': {
+    NODE_ENV: JSON.stringify('development'),
+    WEBPACK: true,
+  },
+});
 
 module.exports = {
   entry: {
@@ -43,5 +51,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [htmlPlugin, bundleAnalyzerPlugin],
+  plugins: [htmlPlugin, bundleAnalyzerPlugin, definePlugin],
 };
