@@ -27,6 +27,10 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
     ],
   },
   resolve: {
