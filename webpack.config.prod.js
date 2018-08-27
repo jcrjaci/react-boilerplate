@@ -1,7 +1,9 @@
 const path = require('path');
 const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -17,6 +19,17 @@ const definePlugin = new DefinePlugin({
 });
 
 const uglifyJSPlugin = new UglifyJSPlugin();
+
+const miniCssExtractPlugin = new MiniCssExtractPlugin({
+  filename: '[name]-[contenthash].css',
+});
+
+const optimizeCssAssetsPlugin = new OptimizeCssAssetsPlugin({
+  assetNameRegExp: /\.css$/g,
+  cssProcessor: require('cssnano'),
+  cssProcessorOptions: { discardComments: { removeAll: true } },
+  canPrint: true,
+});
 
 module.exports = {
   entry: {
@@ -38,12 +51,15 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
     ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [htmlPlugin, uglifyJSPlugin, definePlugin],
+  plugins: [
+    htmlPlugin, uglifyJSPlugin, miniCssExtractPlugin,
+    optimizeCssAssetsPlugin, definePlugin,
+  ],
 };
