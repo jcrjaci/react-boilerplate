@@ -19,7 +19,7 @@ const definePlugin = new DefinePlugin({
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom', 'react-router-dom'],
-    main: [path.resolve(__dirname, 'src/index')],
+    main: ['babel-polyfill', path.resolve(__dirname, 'src/index')],
   },
   output: {
     filename: '[name].[hash].js',
