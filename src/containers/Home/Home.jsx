@@ -1,13 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import fetchCoins from '../../actions/coin/coin';
+import Header from '../../components/Header/Header';
+import Table from '../../components/Table/Table';
+import Loading from '../../components/Loading/Loading';
 import './Home.scss';
 
-const Home = () => <div>Hello React!</div>;
+class Home extends Component {
+  headers = ['#', 'Symbol', 'Name', 'Price USD'];
 
-async function test() {
-  const response = await fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=10`);
-  const json = await response.json();
-  console.log({ json });
+  componentDidMount() {
+    const { fetchCoinsData } = this.props;
+    fetchCoinsData();
+  }
+
+  render() {
+    const { loading, data } = this.props;
+    return (
+      <div>
+        <Header title="LIST OF TOP 100 Cryptocurrencies" />
+        {loading ? <Loading /> : <Table data={data} headers={this.headers} loading={loading} />
+        }
+      </div>
+    );
+  }
 }
-test();
 
-export default Home;
+const mapDispatchToProps = {
+  fetchCoinsData: fetchCoins,
+};
+
+function mapStateToProps({ coin }) {
+  const { loading, data, error } = coin;
+  return { loading, data, error };
+}
+
+Home.defaultProps = {
+  data: [],
+  loading: false,
+};
+
+Home.propTypes = {
+  fetchCoinsData: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  data: PropTypes.arrayOf(PropTypes.object),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
