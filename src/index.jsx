@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render } from 'react-dom';
-import Routes from './Routes';
+import Root from './containers/Root/Root';
+import configureStore from './store/store';
 
-render(<Routes />, document.getElementById('index'));
+render(<Root {...configureStore()} />, document.getElementById('index'));

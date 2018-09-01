@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home';
 import NotFound from './containers/NotFound/NotFound';
 
-const Application = () => (
+export default (
   <HashRouter>
     <Switch>
       <Route exact path="/" component={Home} />
@@ -11,5 +11,3 @@ const Application = () => (
     </Switch>
   </HashRouter>
 );
-
-export default Application;
