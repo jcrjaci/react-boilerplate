@@ -1,0 +1,10 @@
+.table-body {
+  display: flex;
+  flex-direction: column;
+
+  .table-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
