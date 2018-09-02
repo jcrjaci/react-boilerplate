@@ -2,15 +2,20 @@ import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '.
 
 const initialState = { data: [], loading: false, error: false };
 
-function coin(state = initialState, { type, payload }) {
+function coin(state = initialState, { type, payload, error }) {
   switch (type) {
     case FETCH_COINS_REQUEST:
       return { ...state, loading: true };
     case FETCH_COINS_SUCCESS:
-      return { ...state, loading: false, data: payload };
+      return {
+        ...state,
+        loading: false,
+        data: Object.keys(payload.data).map(field => payload.data[field]),
+        total: payload.metadata.num_cryptocurrencies,
+      };
     case FETCH_COINS_FAILURE:
       return {
-        ...state, loading: false, data: [], error: true,
+        ...state, loading: false, data: [], error: true, errorType: error,
       };
     default:
       return state;
