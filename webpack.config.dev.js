@@ -1,13 +1,11 @@
 const path = require('path');
 const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: path.resolve(__dirname, 'src/index.html'),
   filename: './index.html',
 });
-const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ generateStatsFile: true });
 
 const definePlugin = new DefinePlugin({
   'process.env': {
@@ -19,7 +17,7 @@ const definePlugin = new DefinePlugin({
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom', 'react-router-dom'],
-    main: ['babel-polyfill', path.resolve(__dirname, 'src/index')],
+    main: ['@babel/polyfill', path.resolve(__dirname, 'src/index')],
   },
   output: {
     filename: '[name].[hash].js',
@@ -51,5 +49,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [htmlPlugin, bundleAnalyzerPlugin, definePlugin],
+  plugins: [htmlPlugin, definePlugin],
 };

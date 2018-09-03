@@ -3,8 +3,10 @@ const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ generateStatsFile: false });
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: path.resolve(__dirname, 'src/index.html'),
@@ -34,7 +36,7 @@ const optimizeCssAssetsPlugin = new OptimizeCssAssetsPlugin({
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom', 'react-router-dom'],
-    main: ['babel-polyfill', path.resolve(__dirname, 'src/index')],
+    main: ['@babel/polyfill', path.resolve(__dirname, 'src/index')],
   },
   output: {
     filename: '[name].[hash].js',
@@ -42,7 +44,7 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'initial',
+      chunks: 'all',
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -71,6 +73,6 @@ module.exports = {
   },
   plugins: [
     htmlPlugin, uglifyJSPlugin, miniCssExtractPlugin,
-    optimizeCssAssetsPlugin, definePlugin,
+    optimizeCssAssetsPlugin, definePlugin, bundleAnalyzerPlugin,
   ],
 };
