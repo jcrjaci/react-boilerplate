@@ -1,66 +1,66 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import './Pagination.scss';
 
 class Pagination extends Component {
-
-  state = {
-    totalPages: this.props.total /this.props.perPage,
-    currentPage: this.props.page,
+  static propTypes = {
+    currentPage: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
   };
 
-  getPageLink = (page) => <Link key={page} to={`/coins/${page}`}>{page}</Link>;
+  pages = 3;
+
+  getPageLink = (current, page, text = page) => <Link className={`${current === page ? 'active' : ''}`} key={page} to={`/coins/${page}`}>{text}</Link>;
 
   getBeforePages = (current) => {
-    const total = current > 3 ? 3 : current;
-    const pages = Array.from({ length: total }, (v, i) => i).sort(( a, b) => a < b);
-      
-    return pages.map(page => this.getPageLink(current - page - 1));
+    // Number of before pages is 3 unless the current page is lower than 3
+    const beforePages = current > this.pages ? this.pages : current - 1;
+    // create an array with the number of before pages
+    const pages = Array.from({ length: beforePages }, (v, i) => i).sort((a, b) => a < b);
 
+    return pages.map(page => this.getPageLink(current, current - page - 1 ));
   }
 
-  getAfterPages = (current, total_1) =>  {
-    const total = total_1 >= current + 3 ? 3 : total_1 - current;
-    const pages = Array.from({ length: total }, (v, i) => i);
+  getAfterPages = (current, total) => {
+    // Number of after pages is 3 unless the current page more  3 is higher than the total pages
+    const afterPages = total >= current + this.pages ? this.pages : total - current;
+    // create an array with the number of after pages
+    const pages = Array.from({ length: afterPages }, (v, i) => i);
 
-    return pages.map(page => this.getPageLink(current + page + 1));
+    return pages.map(page => this.getPageLink(current, current + page + 1));
   }
 
   getPagesLinks = (current, total) => {
-
-    const beforePages = this.getBeforePages(current);
-    const currentPageLink = this.getPageLink(current);
-    const afterPages = this.getAfterPages(current, total);
+    const beforePages = current > 1 ? this.getBeforePages(current) : [];
+    const currentPageLink = this.getPageLink(current, current);
+    const afterPages = current <= total ? this.getAfterPages(current, total) : [];
 
     return [...beforePages, currentPageLink, ...afterPages];
-
   }
 
+  getPreviousPageLink = currentPage => (currentPage > 1 ? this.getPageLink(currentPage, currentPage - 1, '\u276E') : null);
+
+  getNextPageLink = (currentPage, totalPages) => (currentPage !== totalPages ? this.getPageLink(currentPage, currentPage + 1, '\u276F') : null);
+
+  // https://codepen.io/andrewichert/pen/bZXBbO
   render() {
-    const { totalPages } = this.state;
-    const { currentPage } = this.props;
+    const { currentPage, totalPages } = this.props;
     const renderPrevious = currentPage > 1;
     const renderLast = currentPage !== totalPages;
 
     return (
-      <div>
-        <Link to="/coins/1">First</Link>
-        {renderPrevious && <Link to={`/coins/${currentPage - 1}`}>Previous</Link>}
+      <div className="pagination">
+        {this.getPreviousPageLink(currentPage)}
+        {renderPrevious && this.getPageLink(currentPage, 1, 1)}
+        <span>...</span>
         {this.getPagesLinks(currentPage, totalPages)}
-        {renderLast && <Link to={`/coins/${currentPage + 1}`}>Next</Link>}
-        <Link to={`/coins/${totalPages}`}>Last</Link>
+        <span>...</span>
+        {renderLast && this.getPageLink(currentPage, totalPages, totalPages)}
+        {this.getNextPageLink(currentPage)}
       </div>
     );
   }
 }
-
-
-Pagination.propTypes = {
-  msg: PropTypes.string,
-};
-
-Pagination.defaultProps = {
-  msg: '',
-};
 
 export default Pagination;
