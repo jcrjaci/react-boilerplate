@@ -9,31 +9,49 @@ class Pagination extends Component {
     totalPages: PropTypes.number.isRequired,
   };
 
+  getCollapsed = () => <span>...</span>;
 
-  getPageLink = (current, page, text = page) => <Link className={`${current === page ? 'active' : ''}`} key={page} to={`/coins/${page}`}>{text}</Link>;
+  getFirstPage = () => <Link key={1} to={`/coins/${1}`}>{1}</Link>;
 
-  getPreviousPageLink = currentPage => (currentPage > 1 ? this.getPageLink(currentPage, currentPage - 1, '\u276E') : null);
+  getCurrentPage = page => <Link key={page} className="active" to={`/coins/${page}`}>{page}</Link>;
 
-  getNextPageLink = (currentPage, totalPages) => (currentPage !== totalPages ? this.getPageLink(currentPage, currentPage + 1, '\u276F') : null);
+  getPreviousPage = page => <Link key={page - 1} to={`/coins/${page - 1}`}>{page - 1 }</Link>;
+
+  getNextPage = page => <Link key={page + 1} to={`/coins/${page + 1}`}>{page + 1 }</Link>;
+
+  getLastPage = page => <Link key={page} to={`/coins/${page}`}>{page}</Link>;
+
+  getPreviousButton = page => <Link key="prev" className="prev" to={`/coins/${page - 1}`}>{'\u276E'}</Link>;
+
+  getNextButton = page => <Link key="next" className="next" to={`/coins/${page + 1}`}>{'\u276F'}</Link>;
+
+
+  getPreviousSection = currentPage => (currentPage > 1 ? ([
+    this.getPreviousButton(currentPage),
+    this.getFirstPage(),
+  ]) : []);
+
+  getCurrentSection = (currentPage, totalPages) => ([
+    currentPage > 3 && this.getCollapsed(),
+    currentPage > 2 && this.getPreviousPage(currentPage),
+    this.getCurrentPage(currentPage),
+    currentPage < totalPages - 1 && this.getNextPage(currentPage),
+    currentPage < totalPages - 1 && this.getCollapsed(currentPage),
+  ]);
+
+  getNextSection = (currentPage, totalPages) => (currentPage !== totalPages ? ([
+    this.getLastPage(totalPages),
+    this.getNextButton(currentPage),
+  ]) : []);
 
   render() {
     const { currentPage, totalPages } = this.props;
-    const renderPrevious = currentPage > 2;
-    const renderFirst = currentPage > 1;
-    const renderLast = currentPage !== totalPages;
-    const renderPreviousLast = currentPage < totalPages - 1;
 
     return (
       <div className="pagination">
-        {this.getPreviousPageLink(currentPage)}
-        {renderFirst && this.getPageLink(currentPage, 1)}
-        {renderPrevious && <span>...</span>}
-        {renderPrevious && this.getPageLink(currentPage, currentPage - 1)}
-        {this.getPageLink(currentPage, currentPage)}
-        {renderPreviousLast && this.getPageLink(currentPage, currentPage + 1)}
-        {renderPreviousLast && <span>...</span>}
-        {renderLast && this.getPageLink(currentPage, totalPages)}
-        {this.getNextPageLink(currentPage, totalPages)}
+        {this.getPreviousSection(currentPage)}
+        {this.getCurrentSection(currentPage, totalPages)}
+        {this.getNextSection(currentPage, totalPages)}
       </div>
     );
   }
