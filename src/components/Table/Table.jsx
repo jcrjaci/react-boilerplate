@@ -12,14 +12,12 @@ const Table = ({ data, headers, children }) => (
 );
 
 Table.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  headers: PropTypes.arrayOf(PropTypes.string),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headers: PropTypes.arrayOf(PropTypes.string).isRequired,
   children: PropTypes.node,
 };
 
 Table.defaultProps = {
-  data: [],
-  headers: [],
   children: null,
 };
 
