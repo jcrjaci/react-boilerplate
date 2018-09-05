@@ -1,6 +1,8 @@
 import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '../../constants/coin';
 
-const initialState = { data: [], loading: false, error: false };
+const initialState = {
+  data: [], loading: false, error: false, total: 0,
+};
 
 function coin(state = initialState, { type, payload, error }) {
   switch (type) {
@@ -10,6 +12,7 @@ function coin(state = initialState, { type, payload, error }) {
       return {
         ...state,
         loading: false,
+        error: false,
         data: Object.keys(payload.data).map(field => payload.data[field]),
         total: payload.metadata.num_cryptocurrencies,
       };
