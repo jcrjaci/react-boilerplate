@@ -7,61 +7,88 @@ import Table from '../../components/Table/Table';
 import Loading from '../../components/Loading/Loading';
 import Error from '../../components/Error/Error';
 import Pagination from '../../components/Pagination/Pagination';
+import { numberIsPositive } from '../../utils/utils';
 
 import './Home.scss';
 
 class Home extends Component {
   headers = ['#', 'Symbol', 'Name', 'Price USD'];
-  start = 0;
-  perPage = 10;
-  currentPage = 85;
 
-  static defaultProps = { data: [], loading: false };
+  start = 0;
+
+  perPage = 10;
+
+  state = { currentPage: 1 };
+
+  static defaultProps = { data: [] };
+
   static propTypes = {
     fetchCoinsData: PropTypes.func.isRequired,
-    loading: PropTypes.bool,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
+    total: PropTypes.number.isRequired,
     data: PropTypes.arrayOf(PropTypes.object),
   };
 
   componentDidMount() {
-    this.handleRedirect();
-    this.fetchCoins(this.start);
-  }
-
-  handleRedirect = () => {
-   const { match: { params }, history } = this.props;
+    const { match: { params }, history } = this.props;
     const { page } = params;
 
-    if (typeof page === 'undefined') {
+    const pageIsValid = numberIsPositive(page);
+    this.fetchCoins(page);
+    console.log({ pageIsValid });
+    if (!pageIsValid) {
       history.push('/coins/1');
     }
   }
 
-  fetchCoins = (start = this.start) => {
-    const { fetchCoinsData } = this.props;
+  componentDidUpdate(prevProps) {
+    const { match: { params } } = this.props;
+    const { match: { params: prevParams } } = prevProps;
+    const { currentPage } = this.state;
+    const pageChanged = Number(params.page) !== Number(currentPage);
 
-    fetchCoinsData(start, this.perPage);
+    console.log('DID UPDATE', { page: params.page, prevPage: prevParams.page, state: currentPage, pageChanged });
+
+    if (numberIsPositive(params.page) && pageChanged) {
+      this.setCurrentPage(Number(params.page));
+      this.fetchCoins(Number(params.page));
+    }
   }
+
+  setCurrentPage = (currentPage) => {
+    this.setState(() => ({ currentPage }));
+  }
+
+  fetchCoins = (page) => {
+    const { fetchCoinsData } = this.props;
+    const pageIsValid = numberIsPositive(page);
+
+    this.start = pageIsValid ? (page * this.perPage) - this.perPage : this.start;
+    fetchCoinsData(this.start, this.perPage);
+  }
+
   /**
    * Home container is responsible for display the result of route /
    * this container display a table with crypto currencies ranking
-   * @return 
+   * @return
    * @memberof Home
    */
   render() {
     const { loading, data, error, total } = this.props;
+    const { currentPage } = this.state;
     const renderTable = !loading && data.length > 0;
 
     return (
       <div>
         <Header title="LIST OF TOP 100 crypto currencies" />
-        {error && <Error msg="Oops something went wrong."/>}
+        {error && <Error msg="Oops something went wrong." />}
         {loading && <Loading /> }
-        {renderTable && 
+        {renderTable && (
           <Table data={data} headers={this.headers}>
-            <Pagination currentPage={this.currentPage} perPage={this.perPage} total={total} action={this.fetchCoins}/>
+            <Pagination currentPage={currentPage} totalPages={Math.round(total / this.perPage)} />
           </Table>
-          }
+        )}
       </div>
     );
   }
@@ -70,8 +97,12 @@ class Home extends Component {
 const mapDispatchToProps = { fetchCoinsData: fetchCoins };
 
 const mapStateToProps = ({ coin }) => {
-  const { loading, data, error, total } = coin;
-  return { loading, data, error, total };
-}
+  const {
+    loading, data, error, total,
+  } = coin;
+  return {
+    loading, data, error, total,
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
