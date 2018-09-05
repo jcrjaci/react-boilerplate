@@ -1,11 +1,11 @@
 import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '../../constants/coin';
-import numberIsPositive from '../../utils/utils';
+import { numberIsZeroOrGreater } from '../../utils/utils';
 
 export default function fetchCoins(start, limit) {
   return async (dispatch) => {
     dispatch({ type: FETCH_COINS_REQUEST });
 
-    if (!numberIsPositive(start) || !numberIsPositive(limit)) {
+    if (!numberIsZeroOrGreater(start) || !numberIsZeroOrGreater(limit)) {
       return dispatch({ type: FETCH_COINS_FAILURE, error: 'invalid_number' });
     }
 
