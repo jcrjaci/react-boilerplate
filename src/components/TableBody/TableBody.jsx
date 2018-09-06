@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TableBody.scss';
 
-const TableHeader = ({ data }) => (
+const TableBody = ({ data }) => (
   <div className="table-body">
     {data.map(({
       id, name, rank, symbol, price_usd: price,
@@ -17,12 +17,12 @@ const TableHeader = ({ data }) => (
   </div>
 );
 
-TableHeader.propTypes = {
+TableBody.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
 };
 
-TableHeader.defaultProps = {
+TableBody.defaultProps = {
   data: [],
 };
 
-export default TableHeader;
+export default TableBody;
