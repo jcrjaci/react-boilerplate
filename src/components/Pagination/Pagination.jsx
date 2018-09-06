@@ -26,23 +26,29 @@ class Pagination extends Component {
   getNextButton = page => <Link key="next" className="next" to={`/coins/${page + 1}`}>{'\u276F'}</Link>;
 
 
-  getPreviousSection = currentPage => (currentPage > 1 ? ([
-    this.getPreviousButton(currentPage),
-    this.getFirstPage(),
-  ]) : []);
+  getPreviousSection = currentPage => (currentPage > 1 && (
+    <React.Fragment>
+      {this.getPreviousButton(currentPage)}
+      {this.getFirstPage()}
+    </React.Fragment>
+  ));
 
-  getCurrentSection = (currentPage, totalPages) => ([
-    currentPage > 3 && this.getCollapsed(),
-    currentPage > 2 && this.getPreviousPage(currentPage),
-    this.getCurrentPage(currentPage),
-    currentPage < totalPages - 1 && this.getNextPage(currentPage),
-    currentPage < totalPages - 1 && this.getCollapsed(currentPage),
-  ]);
+  getCurrentSection = (currentPage, totalPages) => (
+    <React.Fragment>
+      {currentPage > 3 && this.getCollapsed()}
+      {currentPage > 2 && this.getPreviousPage(currentPage)}
+      {this.getCurrentPage(currentPage)}
+      {currentPage < totalPages - 1 && this.getNextPage(currentPage)}
+      {currentPage < totalPages - 1 && this.getCollapsed()}
+    </React.Fragment>
+  );
 
-  getNextSection = (currentPage, totalPages) => (currentPage !== totalPages ? ([
-    this.getLastPage(totalPages),
-    this.getNextButton(currentPage),
-  ]) : []);
+  getNextSection = (currentPage, totalPages) => (currentPage !== totalPages && (
+    <React.Fragment>
+      {this.getLastPage(totalPages)}
+      {this.getNextButton(currentPage)}
+    </React.Fragment>
+  ));
 
   render() {
     const { currentPage, totalPages } = this.props;
