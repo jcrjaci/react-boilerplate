@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TableHeader /> should render correctly 1`] = `
+<div
+  className="table-header"
+>
+  <div
+    key="header1"
+  >
+    header1
+  </div>
+  <div
+    key="header2"
+  >
+    header2
+  </div>
+</div>
+`;
