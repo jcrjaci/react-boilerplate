@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Pagination /> should render correctly 1`] = `
+<div
+  className="pagination"
+>
+  <Link
+    className="prev"
+    key="prev"
+    replace={false}
+    to="/coins/9"
+  >
+    ❮
+  </Link>
+  <Link
+    key="1"
+    replace={false}
+    to="/coins/1"
+  >
+    1
+  </Link>
+  <span>
+    ...
+  </span>
+  <Link
+    key="9"
+    replace={false}
+    to="/coins/9"
+  >
+    9
+  </Link>
+  <Link
+    className="active"
+    key="10"
+    replace={false}
+    to="/coins/10"
+  >
+    10
+  </Link>
+  <Link
+    key="11"
+    replace={false}
+    to="/coins/11"
+  >
+    11
+  </Link>
+  <span>
+    ...
+  </span>
+  <Link
+    key="100"
+    replace={false}
+    to="/coins/100"
+  >
+    100
+  </Link>
+  <Link
+    className="next"
+    key="next"
+    replace={false}
+    to="/coins/11"
+  >
+    ❯
+  </Link>
+</div>
+`;
