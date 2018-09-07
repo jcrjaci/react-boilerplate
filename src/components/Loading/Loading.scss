@@ -38,7 +38,7 @@
 
   .spinner div {
     animation: sk-stretchdelay 1.2s infinite ease-in-out;
-    background-color: #000;//$color-input;
+    background-color: rgba(0, 0, 0, 0.1);//$color-input;
     display: inline-block;
     height: 100%;
     margin: 0 1px;
