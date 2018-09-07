@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFound /> should render correctly 1`] = `
+<div
+  className="not-found"
+>
+  <div
+    className="message"
+  >
+    <h1>
+      Page Not Found
+    </h1>
+  </div>
+  <Link
+    replace={false}
+    to="/"
+  >
+    Take me back to home
+  </Link>
+</div>
+`;
+
+exports[`Not Found component should render Not found component 1`] = `
+<div
+  className="not-found"
+>
+  <div
+    className="message"
+  >
+    <h1>
+      Page Not Found
+    </h1>
+  </div>
+  <Link
+    replace={false}
+    to="/"
+  >
+    Take me back to home
+  </Link>
+</div>
+`;
