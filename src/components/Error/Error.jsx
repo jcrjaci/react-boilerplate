@@ -13,7 +13,7 @@ Error.propTypes = {
 };
 
 Error.defaultProps = {
-  msg: 'An error ocured',
+  msg: 'An error occurred',
 };
 
 export default Error;

@@ -13,7 +13,7 @@ describe('<Error />', () => {
   });
 
   it('should render default msg prop in case of falsy value', () => {
-    wrapper.setProps({ msg: ''});
+    wrapper.setProps({ msg: '' });
     expect(wrapper.find('.error-msg').children().text()).toBe('An error occurred');
 
     wrapper.setProps({ msg: undefined });
