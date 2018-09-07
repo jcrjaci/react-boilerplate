@@ -6,7 +6,6 @@ import Pagination from './Pagination';
 
 configure({ adapter: new Adapter() });
 
-
 describe('<Pagination />', () => {
   const wrapper = shallow(<Pagination currentPage={10} totalPages={100} />);
 
@@ -153,7 +152,6 @@ describe('<Pagination />', () => {
     expect(link.get(5).props.children).toBe('\u276F');
     expect(link.get(5).props.className).toBe('next');
     expect(link.get(5).props.to).toBe('/coins/4');
-
   });
 
   it('should only render "< 1 2 3 4 >" with 2 as active', () => {
