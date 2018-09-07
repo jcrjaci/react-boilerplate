@@ -4,7 +4,7 @@ import './Error.scss';
 
 const Error = ({ msg }) => (
   <div className="error-msg">
-    <span>{msg}</span>
+    <span>{msg || 'An error occurred'}</span>
   </div>
 );
 
@@ -13,7 +13,7 @@ Error.propTypes = {
 };
 
 Error.defaultProps = {
-  msg: '',
+  msg: 'An error ocured',
 };
 
 export default Error;
