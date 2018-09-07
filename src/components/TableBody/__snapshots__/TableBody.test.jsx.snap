@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TableBody /> should render correctly 1`] = `
+<div
+  className="table-body"
+>
+  <div
+    className="table-line"
+    key="1"
+  >
+    <div
+      className="rank"
+    />
+    <div
+      className="symbol"
+    >
+      BTC
+    </div>
+    <div
+      className="name"
+    >
+      bitcoin
+    </div>
+    <div
+      className="price"
+    />
+  </div>
+  <div
+    className="table-line"
+    key="2"
+  >
+    <div
+      className="rank"
+    />
+    <div
+      className="symbol"
+    >
+      LTC
+    </div>
+    <div
+      className="name"
+    >
+      litecoin
+    </div>
+    <div
+      className="price"
+    />
+  </div>
+</div>
+`;
