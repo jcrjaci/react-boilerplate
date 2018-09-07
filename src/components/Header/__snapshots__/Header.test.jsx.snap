@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> should render correctly 1`] = `
+<header
+  className="title"
+>
+  List of top 100 crypto currencies
+</header>
+`;
