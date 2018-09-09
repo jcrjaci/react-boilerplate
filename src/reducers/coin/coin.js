@@ -13,8 +13,10 @@ function coin(state = initialState, { type, payload, error }) {
         ...state,
         loading: false,
         error: false,
-        data: Object.keys(payload.data).map(field => payload.data[field]),
-        total: payload.metadata.num_cryptocurrencies,
+        errorType: '',
+        data: payload.data ? Object.keys(payload.data).map(field => payload.data[field]) : [],
+        total: payload.metadata && payload.metadata.num_cryptocurrencies
+          ? payload.metadata.num_cryptocurrencies : state.total,
       };
     case FETCH_COINS_FAILURE:
       return {
