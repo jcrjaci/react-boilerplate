@@ -13,9 +13,10 @@ export default function fetchCoins(start, limit) {
     try {
       const response = await fetch(endpoint);
       const payload = await response.json();
-      dispatch({ type: FETCH_COINS_SUCCESS, payload });
+
+      return dispatch({ type: FETCH_COINS_SUCCESS, payload });
     } catch (error) {
-      dispatch({ type: FETCH_COINS_FAILURE, error: 'request_failed' });
+      return dispatch({ type: FETCH_COINS_FAILURE, error: 'request_failed' });
     }
   };
 }
