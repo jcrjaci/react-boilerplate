@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch, BrowserRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home';
 import NotFound from './containers/NotFound/NotFound';
 
