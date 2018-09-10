@@ -15,8 +15,8 @@ const Root = ({ store, history }) => (
 );
 
 Root.propTypes = {
-  store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  store: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default Root;
