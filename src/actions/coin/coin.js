@@ -1,4 +1,3 @@
-// import { fetch } from 'whatwg-fetch';
 import 'whatwg-fetch';
 import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '../../constants/coin';
 import { numberIsZeroOrGreater } from '../../utils/utils';
