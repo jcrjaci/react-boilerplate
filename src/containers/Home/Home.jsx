@@ -25,6 +25,7 @@ class Home extends Component {
   static propTypes = {
     fetchCoinsData: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    match: PropTypes.objectOf(PropTypes.object).isRequired,
     error: PropTypes.bool.isRequired,
     total: PropTypes.number.isRequired,
     data: PropTypes.arrayOf(PropTypes.object),
@@ -37,6 +38,7 @@ class Home extends Component {
     const pageIsValid = numberIsPositive(page);
     this.fetchCoins(page);
     console.log({ pageIsValid });
+
     if (!pageIsValid) {
       history.push('/coins/1');
     }
@@ -47,8 +49,6 @@ class Home extends Component {
     const { match: { params: prevParams } } = prevProps;
     const { currentPage } = this.state;
     const pageChanged = Number(params.page) !== Number(currentPage);
-
-    console.log('DID UPDATE', { page: params.page, prevPage: prevParams.page, state: currentPage, pageChanged });
 
     if (numberIsPositive(params.page) && pageChanged) {
       this.setCurrentPage(Number(params.page));
@@ -63,7 +63,6 @@ class Home extends Component {
   fetchCoins = (page) => {
     const { fetchCoinsData } = this.props;
     const pageIsValid = numberIsPositive(page);
-
     this.start = pageIsValid ? (page * this.perPage) - this.perPage : this.start;
     fetchCoinsData(this.start, this.perPage);
   }
@@ -75,7 +74,9 @@ class Home extends Component {
    * @memberof Home
    */
   render() {
-    const { loading, data, error, total } = this.props;
+    const {
+      loading, data, error, total,
+    } = this.props;
     const { currentPage } = this.state;
     const renderTable = !loading && data.length > 0;
 
