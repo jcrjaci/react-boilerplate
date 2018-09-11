@@ -11,7 +11,7 @@ import { numberIsPositive } from '../../utils/utils';
 
 import './Home.scss';
 
-class Home extends Component {
+export class Home extends Component {
   headers = ['#', 'Symbol', 'Name', 'Price USD'];
 
   start = 0;
@@ -25,28 +25,41 @@ class Home extends Component {
   static propTypes = {
     fetchCoinsData: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
-    match: PropTypes.objectOf(PropTypes.object).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        page: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     error: PropTypes.bool.isRequired,
     total: PropTypes.number.isRequired,
     data: PropTypes.arrayOf(PropTypes.object),
   };
 
+  /**
+   * when the component mount the first coin fetch is called.
+   * if the url is a base url then we redirect to the first page
+   * @return {void}@memberof Home
+   */
   componentDidMount() {
     const { match: { params }, history } = this.props;
     const { page } = params;
 
     const pageIsValid = numberIsPositive(page);
     this.fetchCoins(page);
-    console.log({ pageIsValid });
 
     if (!pageIsValid) {
       history.push('/coins/1');
     }
   }
 
-  componentDidUpdate(prevProps) {
+  /**
+   * check if the page number come form props is different the one in component state
+   * if so a a fetch for the new page is requested
+   * @return {void}@memberof Home
+   */
+  componentDidUpdate() {
     const { match: { params } } = this.props;
-    const { match: { params: prevParams } } = prevProps;
     const { currentPage } = this.state;
     const pageChanged = Number(params.page) !== Number(currentPage);
 
@@ -56,14 +69,28 @@ class Home extends Component {
     }
   }
 
+  /**
+   * save current page in the component state
+   * @param  {int}
+   * @return {void}
+   */
   setCurrentPage = (currentPage) => {
     this.setState(() => ({ currentPage }));
+    console.log('passei');
   }
 
+  /**
+   * request a fetch for a specific page
+   * calculate the starting number for a specific page and then request a fetch
+   * for that starting number and per page number
+   * @memberof Home
+   */
   fetchCoins = (page) => {
     const { fetchCoinsData } = this.props;
     const pageIsValid = numberIsPositive(page);
+
     this.start = pageIsValid ? (page * this.perPage) - this.perPage : this.start;
+
     fetchCoinsData(this.start, this.perPage);
   }
 
@@ -82,7 +109,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Header title="LIST OF TOP 100 crypto currencies" />
+        <Header title="Top Cryptocurrencies By Market Capitalization" />
         {error && <Error msg="Oops something went wrong." />}
         {loading && <Loading /> }
         {renderTable && (
