@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "autoprefixer": "^9.1.5",
     "connected-react-router": "^4.4.1",
     "cssnano": "^4.1.0",
     "fetch-mock": "^7.0.0-alpha.6",
