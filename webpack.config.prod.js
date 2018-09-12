@@ -8,7 +8,11 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressionPlugin = require('compression-webpack-plugin');
 const cssNano = require('cssnano');
 
-const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ generateStatsFile: false });
+const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({
+  analyzerMode: 'disable',
+  generateStatsFile: true,
+  statsOptions: { source: false },
+});
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: path.resolve(__dirname, 'src/index.html'),

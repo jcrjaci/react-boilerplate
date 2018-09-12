@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --config ./webpack.config.dev.js --mode development --open",
     "eslint": "eslint '**/**' --ext .js --ext .jsx; exit 0",
     "stylelint": "stylelint '**/*.scss'; exit 0",
-    "test": "jest; exit 0"
+    "test": "jest; exit 0",
+    "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
   "repository": {
     "type": "git",
