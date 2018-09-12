@@ -14,6 +14,11 @@ const definePlugin = new DefinePlugin({
   },
 });
 
+const cssLoader = {
+  loader: 'css-loader',
+  options: { sourceMap: true },
+};
+
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom', 'react-router-dom'],
@@ -42,7 +47,8 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: ['style-loader', cssLoader, 'postcss-loader', 'sass-loader'],
+
       },
     ],
   },
