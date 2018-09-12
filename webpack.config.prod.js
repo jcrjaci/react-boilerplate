@@ -5,6 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CompressionPlugin = require('compression-webpack-plugin');
+const cssNano = require('cssnano');
 
 const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ generateStatsFile: false });
 
@@ -28,10 +30,16 @@ const miniCssExtractPlugin = new MiniCssExtractPlugin({
 
 const optimizeCssAssetsPlugin = new OptimizeCssAssetsPlugin({
   assetNameRegExp: /\.css$/g,
-  cssProcessor: require('cssnano'),
+  cssProcessor: cssNano,
   cssProcessorOptions: { discardComments: { removeAll: true } },
   canPrint: true,
 });
+
+const compressionPlugin = new CompressionPlugin({
+  test: /\.(js|css)$/,
+  // deleteOriginalAssets: true,
+});
+
 
 module.exports = {
   entry: {
@@ -73,6 +81,6 @@ module.exports = {
   },
   plugins: [
     htmlPlugin, uglifyJSPlugin, miniCssExtractPlugin,
-    optimizeCssAssetsPlugin, definePlugin, bundleAnalyzerPlugin,
+    optimizeCssAssetsPlugin, definePlugin, bundleAnalyzerPlugin, compressionPlugin,
   ],
 };
