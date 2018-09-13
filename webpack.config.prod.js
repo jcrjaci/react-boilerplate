@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressionPlugin = require('compression-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const cssNano = require('cssnano');
 
 const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({
@@ -44,6 +45,9 @@ const compressionPlugin = new CompressionPlugin({
   // deleteOriginalAssets: true,
 });
 
+const dotEnv = new Dotenv({
+  path: './src/config/production.env',
+});
 
 module.exports = {
   entry: {
@@ -85,6 +89,6 @@ module.exports = {
   },
   plugins: [
     htmlPlugin, uglifyJSPlugin, miniCssExtractPlugin,
-    optimizeCssAssetsPlugin, definePlugin, bundleAnalyzerPlugin, compressionPlugin,
+    optimizeCssAssetsPlugin, definePlugin, bundleAnalyzerPlugin, compressionPlugin, dotEnv,
   ],
 };

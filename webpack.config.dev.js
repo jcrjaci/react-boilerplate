@@ -1,6 +1,7 @@
 const path = require('path');
 const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: path.resolve(__dirname, 'src/index.html'),
@@ -18,6 +19,9 @@ const cssLoader = {
   loader: 'css-loader',
   options: { sourceMap: true },
 };
+const dotEnv = new Dotenv({
+  path: './src/config/development.env',
+});
 
 module.exports = {
   entry: {
@@ -55,5 +59,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [htmlPlugin, definePlugin],
+  plugins: [htmlPlugin, definePlugin, dotEnv],
 };
