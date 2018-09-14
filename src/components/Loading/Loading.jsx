@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Loading.scss';
-
+/** Loading component
+* @param {object} props Component props
+* @param {String} props.className Custom className to loading component
+*/
 const Loading = ({ className }) => (
   <div className={`loading ${className}`}>
     <div className="spinner">
