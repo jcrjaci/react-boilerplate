@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.prod.js --mode production",
     "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json",
-    "dev": "webpack-dev-server --config ./webpack.config.dev.js --mode development --open",
+    "start": "webpack-dev-server --config ./webpack.config.dev.js --mode development --open",
     "eslint": "eslint '**/**'",
     "lint": "npm run eslint & npm run stylelint",
     "stylelint": "stylelint '**/*.scss'",
