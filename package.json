@@ -7,7 +7,7 @@
     "build": "webpack --config ./webpack.config.prod.js --mode production",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js --mode development --open",
     "eslint": "eslint '**/**' --ext .js --ext .jsx; exit 0",
-    "stylelint": "stylelint '**/*.scss'; exit 0",
+    "stylelint": "stylelint '**/*.scss'",
     "test": "jest; exit 0",
     "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
@@ -76,6 +76,7 @@
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "stylelint-config-sass-guidelines": "^5.2.0",
     "whatwg-fetch": "^2.0.4"
   }
 }
