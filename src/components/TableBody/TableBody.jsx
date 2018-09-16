@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TableBody.scss';
 
+/** Table Body component
+* @param {object} props Component props
+* @param {array} props.data List of data to be displayed in table body.
+*/
 const TableBody = ({ data }) => (
   <div className="table-body">
     {data.map(({
