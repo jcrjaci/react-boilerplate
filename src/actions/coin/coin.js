@@ -2,6 +2,13 @@ import 'whatwg-fetch';
 import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '../../constants/coin';
 import { numberIsZeroOrGreater } from '../../utils/utils';
 
+/**
+ * Fetch Cryptocurrencies ranking.
+ * Dispatch redux actions, depending on the result of the api request.
+ * @param  {number} start
+ * @param  {number} limit
+ * @return {Promise}
+ */
 export default function fetchCoins(start, limit) {
   return async (dispatch) => {
     dispatch({ type: FETCH_COINS_REQUEST });
