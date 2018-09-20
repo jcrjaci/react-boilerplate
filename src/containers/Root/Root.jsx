@@ -6,8 +6,8 @@ import routes from '../../Routes';
 
 /** Root component
 * @param {object} props Component props
-* @param {array} store Redux store.
-* @param {array} history Route history.
+* @param {object} props.store Redux store.
+* @param {object} props.history Route history.
 */
 const Root = ({ store, history }) => (
   <Provider store={store}>
