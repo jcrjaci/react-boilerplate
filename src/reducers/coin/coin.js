@@ -3,7 +3,18 @@ import { FETCH_COINS_REQUEST, FETCH_COINS_SUCCESS, FETCH_COINS_FAILURE } from '.
 const initialState = {
   data: [], loading: false, error: false, total: 0,
 };
-
+/** Coin Reducer
+* @param {object} state Redux state, if empty fallback to initial state
+* @param {array} state.data List of top cryptocurrencies
+* @param {Boolean} state.loading When fetch operation is occurring
+* @param {Boolean} state.error When fetch operation had an error
+* @param {Number} state.total Total of coins in the list
+* @param {object} action Action dispatched.
+* @param {String} action.type Action Type.
+* @param {object} action.payload Action payload.
+* @param {String} action.error Action error.
+* @return {state} Redux state.
+*/
 function coin(state = initialState, { type, payload, error }) {
   switch (type) {
     case FETCH_COINS_REQUEST:
