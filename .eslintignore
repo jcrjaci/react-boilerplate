@@ -2,3 +2,8 @@
 /node_modules
 *.html
 /coverage
+*.snap
+*.scss
+*.md
+*.json
+*.env
