@@ -6,6 +6,12 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import reducer from '../reducers/reducer';
 
+/**
+ * Configure Store
+ * @export
+ * @param  {object} initialState Initial store state
+ * @return {object} with store and history
+ */
 export default function configureStore(initialState) {
   const logger = createLogger();
   const history = createBrowserHistory();
